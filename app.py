@@ -415,11 +415,10 @@ if start_button:
       simulator.inject('Audience member', specified_topic)
       st.write(f"(Audience member): {specified_topic}")
       st.write('\n')
-
-      area = st.empty()
+        
       while True:
           name, message = simulator.step()
-          area.markdown(f"({name}): {message}")
-          area.markdown('\n')
+          st.write(f"({name}): {message}")
+          st.write('\n')
           if director.stop:
               break
