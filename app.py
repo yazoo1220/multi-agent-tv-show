@@ -389,7 +389,7 @@ if start_button:
       director = DirectorDialogueAgent(
           name=director_name,
           system_message=agent_system_messages[0],
-          model=ChatOpenAI(temperature=0.2,model_name='gpt-4', callbacks=[handler]),
+          model=ChatOpenAI(temperature=0.5,model_name='gpt-3.5-turbo', callbacks=[handler]),
           speakers=[name for name in agent_summaries if name != director_name],
           stopping_probability=0.2
       )
@@ -399,7 +399,7 @@ if start_button:
           agents.append(DialogueAgent(
               name=name,
               system_message=system_message,
-              model=ChatOpenAI(temperature=0.2,model_name='gpt-4',callbacks=[handler]),
+              model=ChatOpenAI(temperature=0.5,model_name='gpt-3.5-turbo',callbacks=[handler]),
           ))
 
       simulator = DialogueSimulator(
