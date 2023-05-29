@@ -268,7 +268,7 @@ word_limit = 50
 start_button = st.button('はじめる')
 
 if start_button:
-    with st.spinner('準備中...')
+    with st.spinner('準備中...'):
       agent_summary_string = '\n- '.join([''] + [f'{name}: {role}, who is {location}' for name, (role, location) in agent_summaries.items()])
 
       conversation_description = f"""This is a Daily Show episode discussing the following topic: {topic}.
