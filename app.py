@@ -330,10 +330,11 @@ if start_button:
 
 
       for name, description, header, system_message in zip(agent_summaries, agent_descriptions, agent_headers, agent_system_messages):
-          print(f'\n\n{name} Description:')
-          print(f'\n{description}')
-          print(f'\nHeader:\n{header}')
-          print(f'\nSystem Message:\n{system_message.content}')
+          with st.expander('ℹ️'):
+              st.write(f'\n\n{name} Description:')
+              st.write(f'\n{description}')
+              st.write(f'\nHeader:\n{header}')
+              st.write(f'\nSystem Message:\n{system_message.content}')
 
 
 
@@ -346,7 +347,7 @@ if start_button:
               Frame the topic as a single question to be answered.
               Be silly, creative and imaginative.
               Please reply with the specified topic in {word_limit} words or less. 
-              Do not add anything else."""
+              Do not add anything else. this should be in Japanese"""
               )
       ]
       specified_topic = ChatOpenAI(temperature=1.0)(topic_specifier_prompt).content
