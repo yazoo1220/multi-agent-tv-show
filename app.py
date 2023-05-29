@@ -243,7 +243,7 @@ Prompt the next speaker to speak with an insightful question.
         
 
 
-topic = st.text_input('topic','踊るさんま御殿　有名人夫を転がす奥様スペシャル:太田光（爆笑問題）の妻・太田光代と、田中裕二（爆笑問題）の妻・山口もえがテレビ初共演。山口は「社長のおかげで我が家はなりたってます」と太田に感謝。しかし二人の夫に対する不満が爆発！'
+topic = st.text_input('topic','踊るさんま御殿　有名人夫を転がす奥様スペシャル:太田光（爆笑問題）の妻・太田光代と、田中裕二（爆笑問題）の妻・山口もえがテレビ初共演。山口は「社長のおかげで我が家はなりたってます」と太田に感謝。しかし二人の夫に対する不満が爆発！')
 director_name = st.text_input('司会者',"さんま")
 director_role = st.text_input('役割','踊るさんま御殿の司会者')
 director_character = st.text_input('キャラ','どんなネタも面白くしてしまう最強のコメディアン。関西弁でノリツッコミが得意。')
