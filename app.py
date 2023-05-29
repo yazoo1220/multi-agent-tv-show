@@ -411,7 +411,7 @@ if start_button:
       print(f"(Audience member): {specified_topic}")
       print('\n')
 
-      area = st.empty
+      area = st.empty()
       while True:
           name, message = simulator.step()
           area.markdown(f"({name}): {message}")
