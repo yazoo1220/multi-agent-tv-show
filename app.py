@@ -244,6 +244,8 @@ Prompt the next speaker to speak with an insightful question.
 
 st.title('さんま御殿メーカー')
 st.caption('メニューからキャラ設定をしてください')
+model  = st.selectbox(label='モデル', options=['gpt-3.5-turbo','gpt-4'],help="gpt-4は遅くなる可能性があります。")
+
 topic = st.text_input('topic','踊るさんま御殿　有名人夫を転がす奥様スペシャル:太田光（爆笑問題）の妻・太田光代と、田中裕二（爆笑問題）の妻・山口もえがテレビ初共演。山口は「社長のおかげで我が家はなりたってます」と太田に感謝。しかし二人の夫に対する不満が爆発！')
 st.markdown('---')
 director_name = st.sidebar.text_input('司会者',"さんま")
@@ -393,9 +395,9 @@ if start_button:
       director = DirectorDialogueAgent(
           name=director_name,
           system_message=agent_system_messages[0],
-          model=ChatOpenAI(temperature=0.5,model_name='gpt-3.5-turbo', callbacks=[handler]),
+          model=ChatOpenAI(temperature=0.9,model_name=model, callbacks=[handler]),
           speakers=[name for name in agent_summaries if name != director_name],
-          stopping_probability=0.2
+          stopping_probability=0.1
       )
       my_bar.progress(95)
       agents = [director]
@@ -403,7 +405,7 @@ if start_button:
           agents.append(DialogueAgent(
               name=name,
               system_message=system_message,
-              model=ChatOpenAI(temperature=0.5,model_name='gpt-3.5-turbo',callbacks=[handler]),
+              model=ChatOpenAI(temperature=0.9,model_name=model,callbacks=[handler]),
           ))
 
       simulator = DialogueSimulator(
