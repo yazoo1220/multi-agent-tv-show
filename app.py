@@ -245,21 +245,21 @@ Prompt the next speaker to speak with an insightful question.
 st.title('さんま御殿メーカー')
 topic = st.text_input('topic','踊るさんま御殿　有名人夫を転がす奥様スペシャル:太田光（爆笑問題）の妻・太田光代と、田中裕二（爆笑問題）の妻・山口もえがテレビ初共演。山口は「社長のおかげで我が家はなりたってます」と太田に感謝。しかし二人の夫に対する不満が爆発！')
 st.markdown('---')
-director_name = st.text_input('司会者',"さんま")
-director_role = st.text_input('役割','踊るさんま御殿の司会者')
-director_character = st.text_input('キャラ','どんなネタも面白くしてしまう最強のコメディアン。関西弁でノリツッコミが得意。')
+director_name = st.sidebar.text_input('司会者',"さんま")
+director_role = st.sidebar.text_input('役割','踊るさんま御殿の司会者')
+director_character = st.sidebar.text_input('キャラ','どんなネタも面白くしてしまう最強のコメディアン。関西弁でノリツッコミが得意。')
 st.markdown('---')
-agent1_name = st.text_input('ゲスト1',"太田光代")
-agent1_role = st.text_input('役割','爆笑問題の太田光の嫁')
-agent1_character = st.text_input('キャラ','切れ者で歯に衣着せぬ言い方が評判')
+agent1_name = st.sidebar.text_input('ゲスト1',"太田光代")
+agent1_role = st.sidebar.text_input('役割','爆笑問題の太田光の嫁')
+agent1_character = st.sidebar.text_input('キャラ','切れ者で歯に衣着せぬ言い方が評判')
 st.markdown('---')
-agent2_name = st.text_input('ゲスト2',"山口もえ")
-agent2_role = st.text_input('役割','爆笑問題の田中裕二の嫁')
-agent2_character = st.text_input('キャラ','おっとりしているが言うことは言う')
+agent2_name = st.sidebar.text_input('ゲスト2',"山口もえ")
+agent2_role = st.sidebar.text_input('役割','爆笑問題の田中裕二の嫁')
+agent2_character = st.sidebar.text_input('キャラ','おっとりしているが言うことは言う')
 st.markdown('---')
-agent3_name = st.text_input('ゲスト3',"高木泰弘")
-agent3_role = st.text_input('役割','観客')
-agent3_character = st.text_input('キャラ','リアクション芸人')
+agent3_name = st.sidebar.text_input('ゲスト3',"高木泰弘")
+agent3_role = st.sidebar.text_input('役割','観客')
+agent3_character = st.sidebar.text_input('キャラ','リアクション芸人')
 st.markdown('---')
 
 agent_summaries = OrderedDict({
@@ -274,6 +274,7 @@ start_button = st.button('はじめる')
 
 if start_button:
     with st.spinner('準備中...'):
+      my_bar = st.progress(0, text='進行度')
       agent_summary_string = '\n- '.join([''] + [f'{name}: {role}, who is {location}' for name, (role, location) in agent_summaries.items()])
 
       conversation_description = f"""This is a Daily Show episode discussing the following topic: {topic}.
@@ -323,21 +324,22 @@ if start_button:
       Do not add anything else. Please speak in Japanese
           """
           ))
-
+      
+      my_bar.progress(40)
       agent_descriptions = [generate_agent_description(name, role, location) for name, (role, location) in agent_summaries.items()]
       agent_headers = [generate_agent_header(name, role, location, description) for (name, (role, location)), description in zip(agent_summaries.items(), agent_descriptions)]
       agent_system_messages = [generate_agent_system_message(name, header) for name, header in zip(agent_summaries, agent_headers)]
-
-
-      for name, description, header, system_message in zip(agent_summaries, agent_descriptions, agent_headers, agent_system_messages):
-          with st.expander('ℹ️'):
+   
+      my_bar.progress(60)
+      with st.expander('ℹ️'):
+          for name, description, header, system_message in zip(agent_summaries, agent_descriptions, agent_headers, agent_system_messages):
               st.write(f'\n\n{name} Description:')
               st.write(f'\n{description}')
               st.write(f'\nHeader:\n{header}')
               st.write(f'\nSystem Message:\n{system_message.content}')
 
 
-
+      my_bar.progress(80)
       topic_specifier_prompt = [
           SystemMessage(content="You can make a task more specific."),
           HumanMessage(content=
@@ -370,7 +372,7 @@ if start_button:
 
       print(f"Detailed topic:\n{specified_topic}\n")
 
-
+      my_bar.progress(90)
       class SimpleStreamlitCallbackHandler(BaseCallbackHandler):
           """ Copied only streaming part from StreamlitCallbackHandler """
 
@@ -394,7 +396,7 @@ if start_button:
           speakers=[name for name in agent_summaries if name != director_name],
           stopping_probability=0.2
       )
-
+      my_bar.progress(95)
       agents = [director]
       for name, system_message in zip(list(agent_summaries.keys())[1:], agent_system_messages[1:]):        
           agents.append(DialogueAgent(
@@ -407,10 +409,11 @@ if start_button:
           agents=agents,
           selection_function=functools.partial(select_next_speaker, director=director)
       )
+      my_bar.progress(100)
       simulator.reset()
       simulator.inject('Audience member', specified_topic)
-      print(f"(Audience member): {specified_topic}")
-      print('\n')
+      st.write(f"(Audience member): {specified_topic}")
+      st.write('\n')
 
       area = st.empty()
       while True:
