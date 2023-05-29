@@ -243,24 +243,25 @@ Prompt the next speaker to speak with an insightful question.
         
 
 st.title('さんま御殿メーカー')
+st.caption('メニューからキャラ設定をしてください')
 topic = st.text_input('topic','踊るさんま御殿　有名人夫を転がす奥様スペシャル:太田光（爆笑問題）の妻・太田光代と、田中裕二（爆笑問題）の妻・山口もえがテレビ初共演。山口は「社長のおかげで我が家はなりたってます」と太田に感謝。しかし二人の夫に対する不満が爆発！')
 st.markdown('---')
 director_name = st.sidebar.text_input('司会者',"さんま")
 director_role = st.sidebar.text_input('役割','踊るさんま御殿の司会者')
 director_character = st.sidebar.text_input('キャラ','どんなネタも面白くしてしまう最強のコメディアン。関西弁でノリツッコミが得意。')
-st.markdown('---')
+st.sidebar.markdown('---')
 agent1_name = st.sidebar.text_input('ゲスト1',"太田光代")
 agent1_role = st.sidebar.text_input('役割','爆笑問題の太田光の嫁')
 agent1_character = st.sidebar.text_input('キャラ','切れ者で歯に衣着せぬ言い方が評判')
-st.markdown('---')
+st.sidebar.markdown('---')
 agent2_name = st.sidebar.text_input('ゲスト2',"山口もえ")
 agent2_role = st.sidebar.text_input('役割','爆笑問題の田中裕二の嫁')
 agent2_character = st.sidebar.text_input('キャラ','おっとりしているが言うことは言う')
-st.markdown('---')
+st.sidebar.markdown('---')
 agent3_name = st.sidebar.text_input('ゲスト3',"高木泰弘")
 agent3_role = st.sidebar.text_input('役割','観客')
 agent3_character = st.sidebar.text_input('キャラ','リアクション芸人')
-st.markdown('---')
+st.sidebar.markdown('---')
 
 agent_summaries = OrderedDict({
     director_name: (director_role, director_character),
